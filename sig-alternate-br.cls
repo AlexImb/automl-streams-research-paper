@@ -46,9 +46,17 @@
 \def\filedate{April 22, 2009}    % Gerry Murray's tracking data
 \def\docdate {Wednesday 22nd. April 2009} % Gerry Murray (with deltas to doc}
 \usepackage{epsfig}
+
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+
+% \DeclareMathOperator*{\argmax}{arg\,max}
+% \DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\vlambda}{{\boldsymbol{\lambda}}}
+\newcommand{\vLambda}{{\boldsymbol{\Lambda}}}
+
 
 
 \usepackage[table,xcdraw]{xcolor}

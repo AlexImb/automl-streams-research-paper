@@ -10,6 +10,7 @@
   publisher={Elsevier}
 }
 
+% ----------- Surveys ----------------------------
 % Survey NAS
 % http://jmlr.org/papers/volume20/18-598/18-598.pdf
 @article{elsken2018neural,
@@ -19,12 +20,20 @@
   year={2018}
 }
 
-%Survey China: https://arxiv.org/pdf/1810.13306.pdf
+%Survey China 1: https://arxiv.org/pdf/1810.13306.pdf
 @article{quanming2018taking,
   title={Taking human out of learning applications: A survey on automated machine learning},
   author={Quanming, Yao and Mengshuo, Wang and Hugo, Jair Escalante and Isabelle, Guyon and Yi-Qi, Hu and Yu-Feng, Li and Wei-Wei, Tu and Qiang, Yang and Yang, Yu},
   journal={arXiv preprint arXiv:1810.13306},
   year={2018}
+}
+
+%Survey China 2: https://arxiv.org/pdf/1810.13306.pdf
+@article{he2019automl,
+  title={AutoML: A Survey of the State-of-the-Art},
+  author={He, Xin and Zhao, Kaiyong and Chu, Xiaowen},
+  journal={arXiv preprint arXiv:1908.00709},
+  year={2019}
 }
 
 %Survery USA: https://arxiv.org/pdf/1908.05557.pdf
@@ -35,7 +44,26 @@
   year={2019}
 }
 
-%https://eng.uber.com/michelangelo/
+% Survey Germany: problem formulation
+% https://arxiv.org/pdf/1904.12054.pdf
+@article{zoller2019survey,
+  title={Survey on Automated Machine Learning},
+  author={Z{\"o}ller, Marc-Andr{\'e} and Huber, Marco F},
+  journal={arXiv preprint arXiv:1904.12054},
+  year={2019}
+}
+
+% Survey Estonia: with challanges
+@article{elshawi2019automated,
+  title={Automated Machine Learning: State-of-The-Art and Open Challenges},
+  author={Elshawi, Radwa and Maher, Mohamed and Sakr, Sherif},
+  journal={arXiv preprint arXiv:1906.02287},
+  year={2019}
+}
+
+
+% ---------- Industry
+% https://eng.uber.com/michelangelo/
 @misc{uber2017michelangelo, 
     title={Meet Michelangelo: Uber's Machine Learning Platform}, 
     url={https://eng.uber.com/michelangelo/}, 
@@ -44,8 +72,11 @@
     year={2019}, 
     month={Jan}
 }
+% Google AutoML Tables
+@misc{gcTables, title={Google Cloud AutoML Tables }, url={https://cloud.google.com/automl-tables/}, journal={Google}, publisher={Google}}
 
-%OpenML/GitHub Bechmark: https://www.automl.org/wp-content/uploads/2019/06/automlws2019_Paper45.pdf
+% ---------- Industry
+% Bechmark
 @article{gijsbers2019open,
   title={An open source AutoML benchmark},
   author={Gijsbers, Pieter and LeDell, Erin and Thomas, Janek and Poirier, S{\'e}bastien and Bischl, Bernd and Vanschoren, Joaquin},
@@ -53,29 +84,37 @@
   year={2019}
 }
 
-%MetaStream: https://ut.on.worldcat.org/oclc/5735691250
-@article{rossi2014metastream,
-  title={MetaStream: A meta-learning based method for periodic algorithm selection in time-changing data},
-  author={Rossi, Andr{\'e} Luis Debiaso and de Leon Ferreira, Andr{\'e} Carlos Ponce and Soares, Carlos and De Souza, Bruno Feres and others},
-  journal={Neurocomputing},
-  volume={127},
-  pages={52--64},
-  year={2014},
-  publisher={Elsevier}
+% OpenML
+@article {vanschoren2014openml,
+  title = {OpenML: networked science in machine learning},
+  author = {Vanschoren, Joaquin and Van Rijn, Jan N and Bischl, Bernd and Torgo, Luis},
+  journal = {ACM SIGKDD Explorations Newsletter},
+  volume = {15},
+  number = {2},
+  pages = {49--60},
+  year = {2014},
+  publisher = {ACM}
 }
 
-% 3RL datastes + MetaStream, meta-learning
-% https://content.iospress.com/download/intelligent-data-analysis/ida160083?id=intelligent-data-analysis%2Fida160083
-@article{rossi2017guidance,
-  title={A guidance of data stream characterization for meta-learning},
-  author={Rossi, Andr{\'e} Luis Debiaso and De Souza, Bruno Feres and Soares, Carlos and de Leon Ferreira de Carvalho, Andr{\'e} and Ponce, Carlos},
-  journal={Intelligent Data Analysis},
-  volume={21},
-  number={4},
-  pages={1015--1035},
-  year={2017},
-  publisher={IOS Press}
+
+% -------- Dutch Guys ------
+% Book with papers:
+@misc{hutter2019automated,
+  title={Automated Machine Learning-Methods, Systems, Challenges},
+  author={Hutter, Frank and Kotthoff, Lars and Vanschoren, Joaquin},
+  journal={Automated Machine Learning},
+  year={2019},
+  publisher={Springer}
 }
+
+% http://liacs.leidenuniv.nl/~rijnjnvan/pdf/phd/JanVanRijnPhDThesis.pdf
+% BLAST + others
+@phdthesis{van2016massively,
+  title={Massively collaborative machine learning},
+  author={van Rijn, JN and others},
+  year={2016}
+}
+
 
 % 40alg compared, meta-learning
 %https://link.springer.com/content/pdf/10.1007%2F978-3-319-11812-3_28.pdf
@@ -85,53 +124,6 @@
   booktitle={International Conference on Discovery Science},
   pages={325--336},
   year={2014},
-  organization={Springer}
-}
-
-% Drift
-% Auto-Sklearn extension for drift: https://arxiv.org/pdf/1907.10772.pdf
-@article{madrid2019towards,
-  title={Towards AutoML in the presence of Drift: first results},
-  author={Madrid, Jorge G and Escalante, Hugo Jair and Morales, Eduardo F and Tu, Wei-Wei and Yu, Yang and Sun-Hosoya, Lisheng and Guyon, Isabelle and Sebag, Mich{\`e}le},
-  journal={arXiv preprint arXiv:1907.10772},
-  year={2019}
-}
-
-% Drift
-% https://arxiv.org/pdf/1908.04240.pdf
-@article{pinto2019automatic,
-  title={Automatic Model Monitoring for Data Streams},
-  author={Pinto, F{\'a}bio and Sampaio, Marco OP and Bizarro, Pedro},
-  journal={arXiv preprint arXiv:1908.04240},
-  year={2019}
-}
-
-% http://liacs.leidenuniv.nl/~rijnjnvan/pdf/phd/JanVanRijnPhDThesis.pdf
-@phdthesis{van2016massively,
-  title={Massively collaborative machine learning},
-  author={van Rijn, JN and others},
-  year={2016}
-}
-
-% MOA
-% https://arxiv.org/pdf/1810.13306.pdf
-@inproceedings{bifet2010leveraging,
-  title={Leveraging bagging for evolving data streams},
-  author={Bifet, Albert and Holmes, Geoff and Pfahringer, Bernhard},
-  booktitle={Joint European conference on machine learning and knowledge discovery in databases},
-  pages={135--150},
-  year={2010},
-  organization={Springer}
-}
-
-% online, HPO
-%
-@inproceedings{veloso2018self,
-  title={Self Hyper-parameter Tuning for Stream Recommendation Algorithms},
-  author={Veloso, Bruno and Gama, Jo{\~a}o and Malheiro, Benedita and Vinagre, Jo{\~a}o},
-  booktitle={Joint European Conference on Machine Learning and Knowledge Discovery in Databases},
-  pages={91--102},
-  year={2018},
   organization={Springer}
 }
 
@@ -145,4 +137,211 @@
   pages={149--176},
   year={2018},
   publisher={Springer}
+}
+
+
+
+
+% ---------
+%MetaStream: https://ut.on.worldcat.org/oclc/5735691250
+@article{rossi2014metastream,
+  title={MetaStream: A meta-learning based method for periodic algorithm selection in time-changing data},
+  author={Rossi, Andr{\'e} Luis Debiaso and de Leon Ferreira, Andr{\'e} Carlos Ponce and Soares, Carlos and De Souza, Bruno Feres and others},
+  journal={Neurocomputing},
+  volume={127},
+  pages={52--64},
+  year={2014},
+  publisher={Elsevier}
+}
+
+% 3RL datastes + MetaStream, meta-learning
+% About meta-features
+% https://content.iospress.com/download/intelligent-data-analysis/ida160083?id=intelligent-data-analysis%2Fida160083
+@article{rossi2017guidance,
+  title={A guidance of data stream characterization for meta-learning},
+  author={Rossi, Andr{\'e} Luis Debiaso and De Souza, Bruno Feres and Soares, Carlos and de Leon Ferreira de Carvalho, Andr{\'e} and Ponce, Carlos},
+  journal={Intelligent Data Analysis},
+  volume={21},
+  number={4},
+  pages={1015--1035},
+  year={2017},
+  publisher={IOS Press}
+}
+
+% NIPS 2018
+% LML
+% Auto-Sklearn extension for drift: https://arxiv.org/pdf/1907.10772.pdf
+@article{madrid2019towards,
+  title={Towards AutoML in the presence of Drift: first results},
+  author={Madrid, Jorge G and Escalante, Hugo Jair and Morales, Eduardo F and Tu, Wei-Wei and Yu, Yang and Sun-Hosoya, Lisheng and Guyon, Isabelle and Sebag, Mich{\`e}le},
+  journal={arXiv preprint arXiv:1907.10772},
+  year={2019}
+}
+
+% AutoGBT
+@incollection{wilson2020automatically,
+  title={Automatically Optimized Gradient Boosting Trees for Classifying Large Volume High Cardinality Data Streams Under Concept Drift},
+  author={Wilson, Jobin and Meher, Amit Kumar and Bindu, Bivin Vinodkumar and Chaudhury, Santanu and Lall, Brejesh and Sharma, Manoj and Pareek, Vishakha},
+  booktitle={The NeurIPS'18 Competition},
+  pages={317--335},
+  year={2020},
+  publisher={Springer}
+}
+
+
+% --------- AutoML Tools -------
+% Auto-WEKA
+@inproceedings{thornton2013autoweka,
+  title={Auto-WEKA: Combined selection and hyperparameter optimization of classification algorithms},
+  author={Thornton, Chris and Hutter, Frank and Hoos, Holger H and Leyton-Brown, Kevin},
+  booktitle={Proceedings of the 19th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={847--855},
+  year={2013},
+  organization={ACM}
+}
+% auto-sklearn
+@inproceedings{feurer2015autosklearn,
+  title={Efficient and robust automated machine learning},
+  author={Feurer, Matthias and Klein, Aaron and Eggensperger, Katharina and Springenberg, Jost and Blum, Manuel and Hutter, Frank},
+  booktitle={Advances in neural information processing systems},
+  pages={2962--2970},
+  year={2015}
+}
+% H2O.ai AutoML
+@misc{h2o, title={H2O.ai AutoML: Automatic Machine Learning¶}, url={http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}, journal={AutoML: Automatic Machine Learning - H2O 3.28.0.1 documentation}}
+
+% TPOT
+@inproceedings{tpot,
+    author = {Olson, Randal S. and Bartley, Nathan and Urbanowicz, Ryan J. and Moore, Jason H.},
+    title = {Evaluation of a Tree-based Pipeline Optimization Tool for Automating Data Science},
+    booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference 2016},
+    series = {GECCO '16},
+    year = {2016},
+    isbn = {978-1-4503-4206-3},
+    location = {Denver, Colorado, USA},
+    pages = {485--492},
+    numpages = {8},
+    url = {http://doi.acm.org/10.1145/2908812.2908918},
+    doi = {10.1145/2908812.2908918},
+    acmid = {2908918},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+}
+
+% -------- Online Tools ------
+% MOA
+@article{bifet2010moa,
+  title={Moa: Massive online analysis},
+  author={Bifet, Albert and Holmes, Geoff and Kirkby, Richard and Pfahringer, Bernhard},
+  journal={Journal of Machine Learning Research},
+  volume={11},
+  number={May},
+  pages={1601--1604},
+  year={2010}
+}
+
+% scikit-multiflow
+@article{montiel2018scikit,
+  title={Scikit-multiflow: a multi-output streaming framework},
+  author={Montiel, Jacob and Read, Jesse and Bifet, Albert and Abdessalem, Talel},
+  journal={The Journal of Machine Learning Research},
+  volume={19},
+  number={1},
+  pages={2915--2914},
+  year={2018},
+  publisher={JMLR. org}
+}
+
+% --------- Concept drift --------
+% Concept drift in meta-learning
+@inproceedings{klinkenberg2005meta,
+  title={Meta-Learning, Model Selection, and Example Selection in Machine Learning Domains with Concept Drift.},
+  author={Klinkenberg, Ralf},
+  booktitle={LWA},
+  volume={2005},
+  pages={164--171},
+  year={2005}
+}
+
+% Concept drift monitoring
+% https://arxiv.org/pdf/1908.04240.pdf
+@article{pinto2019automatic,
+  title={Automatic Model Monitoring for Data Streams},
+  author={Pinto, F{\'a}bio and Sampaio, Marco OP and Bizarro, Pedro},
+  journal={arXiv preprint arXiv:1908.04240},
+  year={2019}
+}
+
+% ADWIN
+@inproceedings{bifet2007learning,
+  title={Learning from time-changing data with adaptive windowing},
+  author={Bifet, Albert and Gavalda, Ricard},
+  booktitle={Proceedings of the 2007 SIAM international conference on data mining},
+  pages={443--448},
+  year={2007},
+  organization={SIAM}
+}
+
+% DDM: Gama
+@inproceedings{gama2004learning,
+  title={Learning with drift detection},
+  author={Gama, Joao and Medas, Pedro and Castillo, Gladys and Rodrigues, Pedro},
+  booktitle={Brazilian symposium on artificial intelligence},
+  pages={286--295},
+  year={2004},
+  organization={Springer}
+}
+
+%EDDM
+@inproceedings{baena2006early,
+  title={Early drift detection method},
+  author={Baena-Garc{\i}a, Manuel and del Campo-{\'A}vila, Jos{\'e} and Fidalgo, Ra{\'u}l and Bifet, Albert and Gavalda, R and Morales-Bueno, R},
+  booktitle={Fourth international workshop on knowledge discovery from data streams},
+  volume={6},
+  pages={77--86},
+  year={2006}
+}
+
+% Page
+@article{page1954continuous,
+  title={Continuous inspection schemes},
+  author={Page, Ewan S},
+  journal={Biometrika},
+  volume={41},
+  number={1/2},
+  pages={100--115},
+  year={1954},
+  publisher={JSTOR}
+}
+
+
+% ------- Tools ------------
+% Kafka
+@inproceedings{kreps2011kafka,
+  title={Kafka: A distributed messaging system for log processing},
+  author={Kreps, Jay and Narkhede, Neha and Rao, Jun and others},
+  booktitle={Proceedings of the NetDB},
+  pages={1--7},
+  year={2011}
+}
+
+% ------- Architectures ----
+@book{richards2015microservices,
+  title={Microservices vs. service-oriented architecture},
+  author={Richards, Mark},
+  year={2015},
+  publisher={O'Reilly Media}
+}
+
+
+%Hoeff Ensemble
+@article{bifet2012ensembles,
+  title={Ensembles of restricted hoeffding trees},
+  author={Bifet, Albert and Frank, Eibe and Holmes, Geoff and Pfahringer, Bernhard},
+  journal={ACM Transactions on Intelligent Systems and Technology (TIST)},
+  volume={3},
+  number={2},
+  pages={30},
+  year={2012},
+  publisher={ACM}
 }

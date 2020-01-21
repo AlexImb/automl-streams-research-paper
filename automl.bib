@@ -10,7 +10,7 @@
   publisher={Elsevier}
 }
 
-% ----------- Surveys ----------------------------
+% ----------- AutoML Surveys ----------------------------
 % Survey NAS
 % http://jmlr.org/papers/volume20/18-598/18-598.pdf
 @article{elsken2018neural,
@@ -61,6 +61,24 @@
   year={2019}
 }
 
+% ------- Meta-learning surveys ----------------
+@article{vilalta2002perspective,
+  title={A perspective view and survey of meta-learning},
+  author={Vilalta, Ricardo and Drissi, Youssef},
+  journal={Artificial intelligence review},
+  volume={18},
+  number={2},
+  pages={77--95},
+  year={2002},
+  publisher={Springer}
+}
+
+@article{vanschoren2018meta,
+  title={Meta-learning: A survey},
+  author={Vanschoren, Joaquin},
+  journal={arXiv preprint arXiv:1810.03548},
+  year={2018}
+}
 
 % ---------- Industry
 % https://eng.uber.com/michelangelo/
@@ -73,7 +91,11 @@
     month={Jan}
 }
 % Google AutoML Tables
-@misc{gcTables, title={Google Cloud AutoML Tables }, url={https://cloud.google.com/automl-tables/}, journal={Google}, publisher={Google}}
+@misc{gctables,
+  title = {{Google Cloud AutoML Tables}},
+  howpublished = {\url{https://cloud.google.com/automl-tables}},
+  note = {Accessed: 2020-01-20}
+}
 
 % ---------- Industry
 % Bechmark
@@ -208,7 +230,12 @@
   year={2015}
 }
 % H2O.ai AutoML
-@misc{h2o, title={H2O.ai AutoML: Automatic Machine Learning¶}, url={http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}, journal={AutoML: Automatic Machine Learning - H2O 3.28.0.1 documentation}}
+@misc{h2o,
+  title = {{H2O.ai AutoML: Automatic Machine Learning}},
+  howpublished = {\url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html}},
+  note = {Accessed: 2020-01-20}
+}
+
 
 % TPOT
 @inproceedings{tpot,
@@ -345,3 +372,43 @@
   year={2012},
   publisher={ACM}
 }
+
+% Prequential evaluation
+% http://jmlr.org/papers/volume19/18-251/18-251.pdf
+@inproceedings{gama2009issues,
+  title={Issues in evaluation of stream learning algorithms},
+  author={Gama, Jo{\~a}o and Sebasti{\~a}o, Raquel and Rodrigues, Pedro Pereira},
+  booktitle={Proceedings of the 15th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={329--338},
+  year={2009},
+  organization={ACM}
+}
+
+% ------ Concept drift generators --------
+@inproceedings{street2001streaming,
+  title={A streaming ensemble algorithm (SEA) for large-scale classification},
+  author={Street, W Nick and Kim, YongSeog},
+  booktitle={Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={377--382},
+  year={2001},
+  organization={ACM}
+}
+
+@article{breiman1984classification,
+  title={Classification and Regression Trees (Monterey, CA: Wadsworth and Brooks/Cole)},
+  author={Breiman, L and Friedman, JH and Olshen, RA and Stone, CJ},
+  journal={Links},
+  year={1984}
+}
+
+@inproceedings{hulten2001mining,
+  title={Mining time-changing data streams},
+  author={Hulten, Geoff and Spencer, Laurie and Domingos, Pedro},
+  booktitle={Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={97--106},
+  year={2001},
+  organization={ACM}
+}
+
+
+% ---- end concept drift generators ------

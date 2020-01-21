@@ -100,7 +100,7 @@ Alexandru-Ionut Imbrea\\
 \maketitle
 
 \begin{abstract}
-Automated machine learning techniques benefited from tremendous research progress in recently. These developments and the continuous-growing demand for machine learning experts led to the development of numerous AutoML tools. However, these tools assume that the entire training dataset is available upfront and that the underlying distribution does not change over time. These assumptions do not hold in a data stream mining setting where an unbounded stream of data cannot be stored and is likely to manifest concept drift. Industry applications of machine learning on streaming data become more popular due to the increasing adoption of real-time streaming patterns in IoT, microservices architectures, web analytics, and other fields. The research summarized in this paper surveys the state-of-the-art open-source AutoML tools, applies them to data collected from streams, and measures how their performance changes over time. For comparative purposes, batch, batch incremental and instance incremental estimators are applied and compared. Moreover, a meta-learning technique for online algorithm selection based on meta-feature extraction is proposed and compared while model replacement and continual AutoML techniques are discussed. The results show that off-the-shelf AutoML tools can provide satisfactory results but in the presence of concept drift, detection or adaptation techniques have to be applied to maintain the predictive accuracy over time.
+Automated Machine Learning (AutoML) techniques benefitted from tremendous research progress recently. These developments and the continuous-growing demand for machine learning experts led to the development of numerous AutoML tools. Industry applications of machine learning on streaming data become more popular due to the increasing adoption of real-time streaming patterns in IoT, microservices architectures, web analytics, and other fields. However, the AutoML tools assume that the entire training dataset is available upfront and that the underlying data distribution does not change over time. These assumptions do not hold in a data-stream-mining setting where an unbounded stream of data cannot be stored and is likely to manifest concept drift. This research surveys the state-of-the-art open-source AutoML tools, applies them to real and synthetic streamed data, and measures how their performance changes over time. For comparative purposes, batch, batch incremental and instance incremental estimators are applied and compared. Moreover, a meta-learning technique for online algorithm selection based on meta-feature extraction is proposed and compared while model replacement and continual AutoML techniques are discussed. The results show that off-the-shelf AutoML tools can provide satisfactory results but in the presence of concept drift, detection or adaptation techniques have to be applied to maintain the predictive accuracy over time.
 \end{abstract}
 
 % A category with the (minimum) three required fields (NOT USED in Bachelor Referaat)
@@ -114,18 +114,18 @@ Automated machine learning techniques benefited from tremendous research progres
 \section{Introduction}
 Developing machine learning models that provide constant high predictive accuracy is a difficult task that usually requires the expertise of a data scientist. Data scientists are multidisciplinary individuals possessing skills from the intersection of mathematics, computer science, and business/domain knowledge. Their job mainly consists of performing a workflow that includes, among others, the following steps: data gathering, data cleaning, feature extraction, algorithm selection, and hyperparameter optimization. The last three steps of this workflow are iterative tasks that involve fine-tuning which is usually performed by data scientists in a trial-and-error process until the desired performance is achieved. The ever-growing amount of machine learning algorithms and hyperparameters leads to an increase in the number of configurations which makes data scientists' job more laborious than ever. 
 
-Considering the above reason and due to the lack of experts required in the industry, the field of Automated Machine Learning (Auto ML) benefited from considerable advances recently \cite{elshawi2019automated}. AutoML tools and techniques enable non-experts to achieve satisfactory results and experts to automate and optimize their tasks. Although the field of AutoML is relatively new, it consists of multiple other sub-fields such as Automated Data Clean (Auto Clean), Automated Feature Engineering (Auto FE), Hyperparameter Optimization (HPO), Neural Architecture Search (NAS), and Meta-Learning. The sub-field of Meta-Learning is concerned with solving the algorithm selection problem \cite{rice1976algorithm} applied to ML by selecting the algorithm that provides the best predictive performance for a data set. HPO techniques are used to determine the optimal set of hyperparameters for a learning algorithm, while Auto FE aims to extract and select features automatically. NAS represents the process of automating architecture engineering for artificial neural networks which already outperformed manually designed ones in specific tasks such as image classification \cite{elsken2018neural}. The overarching goal of the field is to develop tools that can produce end-to-end machine learning pipelines with minimal intervention and knowledge. However, this is not yet possible using state-of-the-art open-source tools, thus when talking about AutoML throughout the paper it means solving the \textit{combined algorithm selection and hyperparameter optimization} problem, or CASH for short, as defined by Thornton et al. in \cite{thornton2013autoweka}. When other techniques from the general field of AutoML, such as meta-learning, it is specifically mentioned.
+Considering the above reason and due to the lack of experts required in the industry, the field of Automated Machine Learning (AutoML) benefited from considerable advances recently \cite{elshawi2019automated}. AutoML tools and techniques enable non-experts to achieve satisfactory results and experts to automate and optimize their tasks. Although the field of AutoML is relatively new, it consists of multiple other sub-fields such as Automated Data Cleaning (Auto Clean), Automated Feature Engineering (Auto FE), Hyperparameter Optimization (HPO), Neural Architecture Search (NAS), and Meta-Learning \cite{zoller2019survey}. The sub-field of Meta-Learning is concerned with solving the algorithm selection problem \cite{rice1976algorithm} applied to ML by selecting the algorithm that provides the best predictive performance for a data set. HPO techniques are used to determine the optimal set of hyperparameters for a learning algorithm, while Auto FE aims to extract and select features automatically. NAS represents the process of automating architecture engineering for artificial neural networks which already outperformed manually designed ones in specific tasks such as image classification \cite{elsken2018neural}. The overarching goal of the field is to develop tools that can produce end-to-end machine learning pipelines with minimal intervention and knowledge. However, this is not yet possible using state-of-the-art open-source tools, thus when talking about AutoML throughout the paper it means solving the \textit{combined algorithm selection and hyperparameter optimization} problem, or CASH for short, as defined by Thornton et al. in \cite{thornton2013autoweka}. When other techniques from the general field of AutoML, such as meta-learning are needed, it is specifically mentioned.
 
-Regardless of their increasing popularity and advances, current AutoML tools lack applicability in data stream mining. Mainly due to the searching and optimization techniques these tools use internally, as described in section \ref{relatedwork}, they have to make a series of assumptions \cite{madrid2019towards}. First, the entire training data has to be available at the beginning and during the training process. Second, it is assumed that the data used for prediction follows the same distribution as the training data and it does not change over time. However, streaming data does not follow any of these assumptions by providing an unbounded stream of data that cannot be stored entirely in memory and that can change its underlying distribution over time. The problem of applying AutoML to data streams becomes more relevant if considering that the popularity of microservices and event-driven architectures is also increasing considerably \cite{richards2015microservices}. In these types of systems streams of data are constantly generated from various sources including sensors data, network traffic, and user interaction events. The growing amount of streamed data pushed the development of new technologies and architectures that can accommodate streaming big amounts of data in scalable and distributed ways (e.g. Apache Kafka \cite{kreps2011kafka}). Nevertheless, despite their relevance, AutoML tools and techniques lack integration with such big data streaming technologies.
+Regardless of their increasing popularity and advances, current AutoML tools lack applicability in data stream mining. Mainly due to the searching and optimization techniques these tools use internally, as described in Section \ref{relatedwork}, they have to make a series of assumptions \cite{madrid2019towards}. First, the entire training data has to be available at the beginning and during the training process. Second, it is assumed that the data used for prediction follows the same distribution as the training data and it does not change over time. However, streaming data may not follow any of these assumptions, by providing an unbounded stream of data that cannot be stored entirely in memory and that can change its underlying distribution over time. The problem of applying AutoML to data streams becomes more relevant if considering that the popularity of microservices and event-driven architectures is also increasing considerably \cite{richards2015microservices}. In these types of systems, streams of data are constantly generated from various sources including sensor data, network traffic, and user interaction events. The growing amount of streamed data pushed the development of new technologies and architectures that can accommodate streaming big amounts of data in scalable and distributed ways (e.g. Apache Kafka \cite{kreps2011kafka}). Nevertheless, despite their relevance, AutoML tools and techniques lack integration with such big data streaming technologies.
 
-The workaround solution adopted by the industry consists in general of storing the data stream events in a distributed file system, perform AutoML on that data in batch, serialize the model, and use the model for providing real-time predictions for the new stream events \cite{uber2017michelangelo}, \cite{gcTables}. This solution presents a series of shortcomings including predicting on an outdated model, expensive disk and network IO, and the problem of not adapting to concept drift. In this paper, the problem of concept drift decreasing the predictive performance is extensively discussed and measured for models generated using AutoML tools. For comparison, batch, batch incremental and online models are developed and used as a baseline. Moreover, detection and adaptation techniques for concept drift are assessed for both AutoML-generated and online models. 
+The workaround solution adopted by the industry consists in general of storing the data stream events in a distributed file system, perform AutoML on that data in batch, serialize the model, and use the model for providing real-time predictions for the new stream events \cite{uber2017michelangelo}, \cite{gctables}. This solution presents a series of shortcomings including predicting on an outdated model, expensive disk and network IO, and the problem of not adapting to concept drift. In this paper, the problem of concept drift decreasing the predictive performance is extensively discussed and measured for models generated using AutoML tools. For comparison, batch, batch incremental and online models are developed and used as a baseline. Moreover, detection and adaptation techniques for concept drift are assessed for both AutoML-generated and online models. 
 
 The main contribution of this research consists of:
 \begin{itemize}
   \item An overview and discussion of the possible AutoML techniques and tools that can be applied to data streams.
-  \item Python library called \textbf{automl-streams}\footnote{\url{https://pypi.org/project/automl-streams}} available on GitHub\footnote{\url{https://github.com/AlexImb/automl-streams}} including: a way to use a Kafka stream in Python ML/AutoML libraries, an evaluator for pretrained models, implementations of meta-learning algorithms.
+  \item A Python library called \textbf{automl-streams}\footnote{\url{https://pypi.org/project/automl-streams}} available on GitHub\footnote{\url{https://github.com/AlexImb/automl-streams}} including: a way to use a Kafka stream in Python ML/AutoML libraries, an evaluator for pretrained models, implementations of meta-learning algorithms.
   \item A collection of containerized experiments\footnote{\url{https://github.com/AlexImb/automl-streams/tree/master/demos}} that can be easily extended and adapted to new algorithms and frameworks.
-  \item An OpenML \cite{vanschoren2014openml} study including all the datasets used in experiments.
+%   \item An OpenML \cite{vanschoren2014openml} study including all the datasets used in experiments.
   \item An interpretation of the experimental results.
  
 \end{itemize}
@@ -135,11 +135,11 @@ In the following sections of the paper the main research questions are presented
 \section{Research Questions}
 The proposed research aims to provide relevant experimental results and interpretations of the results as answers for the following research questions: 
 
-\textbf{RQ1} How automated machine learning techniques and tools can be applied to data streams?
+\textbf{RQ1} How can AutoML techniques and tools be applied to data streams?
 \newline
 \newline
-\textbf{RQ2} How AutoML-tuned models perform over time compared to offline and online models in providing real-time predictions?
-		\newline\-\hspace{0.5cm}\textbf{RQ2.1} How algorithm selection using online meta-learning influences the predictive performance?
+\textbf{RQ2} How do AutoML-tuned models perform over time compared to offline and online models, in providing real-time predictions?
+		\newline\-\hspace{0.5cm}\textbf{RQ2.1} How does algorithm selection using online meta-learning influence the predictive performance?
     
 \section{Problem formulation}
 The formal definition of the AutoML problem as stated by Feurer et al. in \cite{feurer2015autosklearn} is the following:
@@ -158,8 +158,7 @@ loss of a solution $\hat{y}_{n+1}, . . . , \hat{y}_{n+m}$ to the AutoML problem 
 When restricting the problem to a combined algorithm selection and hyperparameter optimization problem (CASH) as defined and formalised by Thornton et al. in \cite{thornton2013autoweka} the definition of the problem becomes:
 
 \textbf{Definition 2 (CASH):}
-\\ Given a set of algorithms $\mathcal{A} = \{A^{(1)}, \dots, A^{(k)}\}$ with associated hyperparameter spaces $\vLambda^{(1)}, \dots, \vLambda^{(k)}$, we define
-the CASH problem as computing:
+\\ Given a set of algorithms $\mathcal{A} = \{A^{(1)}, \dots, A^{(k)}\}$ with associated hyperparameter spaces $\vLambda^{(1)}, \dots, \vLambda^{(k)}$ and a loss metric loss metric $\mathcal{L}(\cdot, \cdot, \cdot)$, we define the CASH problem as computing:
 
 \begin{equation}
 {A^*}_{\vlambda^*} \in \argmin_{A^{(j)} \in \mathcal{A}, \vlambda \in \vLambda^{(j)}} \frac{1}{k}  \sum_{i=1}^{k} \mathcal{L}(A^{(j)}_\vlambda, \mathcal{D}_{\text{train}}^{(i)}, \mathcal{D}_{\text{valid}}^{(i)})
@@ -168,12 +167,11 @@ the CASH problem as computing:
 \section{Background}
 
 \subsection{AutoML Frameworks}
-To solve the AutoML problem (in its original form or as a CASH problem) a configuration space containing the possible combinations of algorithms and hyperparameters is defined. I case of artificial neural networks algorithms an addition dimension represented by the neural architecture is added to the search space. For searching this space different searching strategies and techniques can be used \cite{truong2019towards}. For the purpose of this research one representative open-source framework \cite{gijsbers2019open} was selected for each type of searching strategy (CASH solver). The selected frameworks and their searching strategy are displayed in Table \ref{table:libraries}.
+To solve the AutoML problem (in its original form or as a CASH problem) a configuration space containing the possible combinations of algorithms and hyperparameters is defined. In the case of artificial neural networks algorithms, an addition dimension represented by the neural architecture is added to the search space. For searching this space, different searching strategies and techniques can be used \cite{truong2019towards}. For the purpose of this research one representative open-source framework \cite{gijsbers2019open} was selected for each type of searching strategy (CASH solver). The selected frameworks and their searching strategy are displayed in Table \ref{table:libraries}.
 
 \begin{savenotes}
 \begin{table}[h]
 \renewcommand{\arraystretch}{1.25}
-\label{table:libraries}
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -184,90 +182,139 @@ TPOT \footnote{\url{http://epistasislab.github.io/tpot}} & Genetic Programming \
 auto-sklearn \footnote{\url{https://automl.github.io/auto-sklearn/master}} &  SMAC \\ \hline
 \end{tabular}
 \caption{Open-source AutoML Libraries}
+\label{table:libraries}
 \end{table}
 \end{savenotes}
 
-\textbf{Bayesian Optimization} is an iterative optimization process being suited for expensive objective functions. It consists of two main components which are surrogate models for modeling the objective function and an acquisition function that measures the value that would be generated by the evaluation of the objective function at a new point \cite{zoller2019survey}. This techniques is also used in the Sequential Model-based Algorithm Configuration \textbf{SMAC} library that allows using Gaussian processes and Random Forests as surrogate models \cite{feurer2015autosklearn}.
+\textbf{Bayesian Optimization} is an iterative optimization process suited for expensive objective functions. It consists of two main components: surrogate models for modeling the objective function, and an acquisition function that measures the value that would be generated by the evaluation of the objective function at a new point \cite{zoller2019survey}. This techniques is also used in the Sequential Model-based Algorithm Configuration (SMAC) library that allows using Gaussian processes and Random Forests as surrogate models \cite{feurer2015autosklearn}.
 
-\textbf{Grid Search}, as the name suggests, creates a grid of configurations and searches through them. The advantage of this approach is that it can be easily paralyzed. The H2O.ai framework makes use for that in order to solve the CASH problem in a distributed way across nodes in a cluster \cite{h2o}. 
+\textbf{Grid Search}, as the name suggests, creates a grid of configurations and searches through them. The advantage of this approach is that it can be easily parallelized. The H2O.ai framework makes use of that in order to solve the CASH problem in a distributed way across nodes in a cluster \cite{h2o}. 
 
-\textbf{Genetic Programming} or Genetic Algorithm is a technique inspired by the process of natural selection where concepts such as chromosomes and mutations are used develop better generations. Tree-based Pipeline Optimization Tool (TPOT) uses this technique to generate and optimize machine learning pipelines \cite{tpot}.
+\textbf{Genetic Programming} or Genetic Algorithm is a technique inspired by the process of natural selection where concepts such as chromosomes and mutations are used to develop better generations of solutions to the problem. Tree-based Pipeline Optimization Tool (TPOT) uses this technique to generate and optimize machine learning pipelines \cite{tpot}.
 
 \subsection{Online learning}
 Online machine learning approaches as instance or batch incremental learning are techniques usually applied to data stream mining and big data. These algorithms do not require to store the entire training dataset in memory and can be partially fitted with data. While some algorithms are especially designed for online learning \cite{bifet2012ensembles} others are adaptation of batch algorithms such as Stochastic Gradient Descent, k Nearest Neighbour and Naive Bayes \cite{van2014algorithm}. 
 
-\textbf{Ensembles} techniques train a homogeneous \cite{bifet2012ensembles} or heterogeneous \cite{van2018online} set of estimators generating a set of models. In order to make a prediction a voting method between the members of the ensemble is established. Each model makes a prediction and the final prediction is calculated based on a predefined rule such as the majority vote, a weight, etc.
+\textbf{Ensemble} techniques train a homogeneous \cite{bifet2012ensembles} or heterogeneous \cite{van2018online} set of estimators generating a set of models. In order to make a prediction a voting method between the members of the ensemble is established. Each model makes a prediction and the final prediction is calculated based on a predefined rule such as the majority vote, a weight, etc.
 
-\subsection{Drift detection}
+\subsection{Concept drift detection}
+
+The problem of the streamed data not following an underlying distribution over time and the concept being learned changing over time is called concept drift. While some algorithms such as k Nearest Neighbour can naturally deal with drift by design \cite{van2016massively} others need explicit drift detection methods. All drift detectors assume that the accuracy of a predictor over a data stream should improve or stay the same over time. When the accuracy drops (abruptly or gradually) a warning level or a change is identified. A simple solution is the Page Hinkley test proposed in 1954 \cite{page1954continuous} that involves computing the  mean of the observed values up to the current moment. More recent solutions adapted to data stream mining consist of keeping a sliding window and computing relevant statistics over that window. Fixed-size slide window implementations are used for the Drift Detection Method (DDM) \cite{gama2004learning} and Early Drift Detection Method (EDDM) \cite{baena2006early}. The difference between these two being that EDDM aims to improve the detection rate of gradual concept drift in DDM, while keeping a good performance against abrupt concept drift. Another popular implementation of a drift detector is ADaptive WINdowing (ADWIN) \cite{bifet2007learning} which will decide the size of the window by cutting the statistics window at different points and analysing the average of some statistic over these two windows.
 
 \subsection{Evaluation techniques}
 
-\textbf{Holdout}
+Considering the non-stationary nature of an unbounded stream of data classic techniques for evaluating model on batch data such as train-test split and cross-validation do not apply to models trained on streamed data \cite{gama2009issues}. In order to overcome this problem and obtain accurate measurements over time new evaluation methods are introduced. 
 
-\textbf{Prequential}
+\textbf{Periodic holdout} evaluation involves storing a number of samples from the stream (holdout) for testing purposes and renewing the test samples after a preset amount of time or observed samples. This technique implies that the data used for testing is never used for training the model.
+
+\textbf{Prequential} evaluation or the interleaved test-then-train method in which each sample serves two purposes: first the sample is used for testing, by making a prediction and updating the metrics, and then used for training (partially fitting) the model. Using this method, all the samples are used for training and no holdout has to be kept in memory.
 
 \subsection{Meta-learning}
 
-- learning from prior models
+Meta-learning, or learning how to learn \cite{vanschoren2018meta}, although way older than AutoML, is field of machine learning that is often categorized as sub-field of AutoML. Inspired by how humans learn and the fact that they do not start from scratch every time but use their previous learning experience to learn new tasks, meta-learning tries to achieve the same for machine learning tasks. Meta-learning techniques can be used for either improving existing models, generating new ones or reducing the configuration space. In order to do so in a systematic and data-driven way the collection of meta-data is required. The source of meta-data can differ between the methods used: configurations and performance from model evaluation, task properties such as meta-features, and prior models (transfer learning) \cite{vanschoren2014openml}.
 
-- learning from model evaluations: landmarking
-
-- learning from task properties: meta-features
+When applied to data streams, meta-learning techniques are often used to predict the weights of base-learners trained on the incoming samples as part of an ensemble \cite{van2018online}. The model that predicts the weights of the base-learners or one base learner (i.e. 100\% weight) is usually called a meta-learner. The source of its knowledge (meta-knowledge) can be meta-data represented by meta-features \cite{rossi2017guidance} extracted from current stream or similar streams following the same concept. Furthermore, the meta-learner can be trained during the processing of the stream or pretrained and only used for making online predictions during the processing part.
 
 \section{Related Work}
 \label{relatedwork}
 
-From the literature research carried, it became clear that the state-of-the-art tools and techniques do not include any solution for solving the AutoML or CASH problem in a streaming setting. However, being an well-known problem in the field, it was part of the NIPS 2018 AutoML Challenge \footnote{\url{https://www.4paradigm.com/competition/nips2018}} formulated as a life-long AutoML problem. According to the organisers of the challenge, what is considered to be the main difference between life-long machine learning (LML) and online learning is that in LML the true labels can arrive days or weeks later. Either way, the problem of solving the AutoML on a data stream still hold. The only two solutions that performed well in the challenge are going to be discussed. 
+From the literature research carried, it became clear that the state-of-the-art tools and techniques do not include any solution for solving the AutoML or CASH problem in a streaming setting. However, being an well-known problem in the field, it was part of the NIPS 2018 AutoML Challenge\footnote{\url{https://www.4paradigm.com/competition/nips2018}} formulated as a life-long AutoML problem. According to the organisers of the challenge, what is considered to be the main difference between life-long machine learning (LML) and online learning is that in LML the true labels can arrive days or weeks later. Either way, the problem of solving the AutoML on a data stream still hold. The only two solutions that performed well in the challenge are going to be discussed. 
 
-First, Wilson et al. propose AutoGBT \cite{wilson2020automatically}, a solution that combines an adaptive self-optimized end-to-end machine learning pipeline
-based on gradient boosting trees with automatic hyper-parameter tuning using Sequential Model-Based Optimization (SMBO-TPE). \textbf{TODO:} Discuss their solution more: no explicit drift detection, only one algorithms, maybe a happy path?
+First, Wilson et al. propose AutoGBT \cite{wilson2020automatically}, a solution that combines an adaptive self-optimized end-to-end machine learning pipeline based on Gradient Boosting Decision Trees (GBDT) with automatic hyper-parameter tuning using Sequential Model-Based Optimization (SMBO-TPE). Their solution does not include any explicit drift detection mechanism and relies on the implicit drift adaptation techniques of the implementation of GBDT from the LightGBT\footnote{\url{https://github.com/microsoft/LightGBM}} library. Although their solution performed very well for most of the datasets of the challange, the usage of a single type of algorithm can be seen as happy path by not being flexible for other tasks or use cases.
 
-Second, Madrid et al. propose LML auto-sklearn \cite{madrid2019towards}, a solution built around the auto-sklearn library which incorpotes explicit drift detection using Fast Hoeffding Drift Detection Method (FHDDM). When drift is detected a decision of either replacing or improving the model is made. According to their benchmarks the best results are obtained when the model is replace by retraining a new one with the entire dataset seen so far. However, this method works only until the dataset kept in memory reaches a certain size which is not a feasible solution for big-data.
+Second, Madrid et al. propose LML auto-sklearn \cite{madrid2019towards}, a solution built around the auto-sklearn library, which incorporates explicit drift detection using Fast Hoeffding Drift Detection Method (FHDDM). When drift is detected a decision of either replacing or improving the model is made. According to their benchmarks, the best results are obtained when the model is replaced by retraining a new one with the entire dataset seen so far. However, this method works only until the dataset kept in memory reaches a certain size which is not a feasible solution for big data.
 
-Furthermore, in other works, aspects of sub-fields of AutoML applied to data streams and online learning. An example will be meta-learning, used for algorithm selection based on meta-features \cite{rossi2017guidance}. Two possible implementations of meta-learning algorithms for streams that can suggest the best predictor for the next sliding window are extensively discussed in the literature. First, A. L. D. Rossi et al. proposed \textbf{MetaStream} \cite{rossi2014metastream}, a meta-learning based method for periodic algorithm selection between two algorithms. The approach of MetaStream is to characterize, i.e. extract meta-features, from a training window and predict the learning algorithm on a selection window consisting of future data points. This way both characteristics from the past and incoming data are used in the selection process. Second, J. N. van Rijn et al. \cite{van2014algorithm} proposed a slightly different approach that involves determining which algorithm among multiple ones will be used to predict the next window of data based on data characteristics measured in the previous window and the meta-knowledge. Both approaches claim to perform better than incremental learning algorithms and ensembles for their selected datasets.
+Furthermore, in other works, aspects of sub-fields of AutoML applied to data streams and online learning. An example will be meta-learning, used for algorithm selection based on meta-features \cite{rossi2017guidance}. Two possible implementations of meta-learning algorithms for streams that can suggest the best predictor for the next sliding window are extensively discussed in the literature. First, A. L. D. Rossi et al. proposed MetaStream \cite{rossi2014metastream}, a meta-learning based method for periodic algorithm selection between two algorithms. The approach of MetaStream is to characterize, i.e. extract meta-features, from a training window and predict the learning algorithm on a selection window consisting of future data points. This way both characteristics from the past and incoming data are used in the selection process. Second, J. N. van Rijn et al. \cite{van2014algorithm} proposed a slightly different approach that involves determining which algorithm among multiple ones will be used to predict the next window of data based on data characteristics measured in the previous window and the meta-knowledge. Both approaches claim to perform better than incremental learning algorithms and ensembles for their selected datasets.
 
-Consequently, after claiming that extracting meta-features is a computationally expensive process, van Rijn et al. \cite{van2018online} proposes a different approach by introducing the Online Performance Estimation framework. It represents a measurement of how ensemble members have performed on recent examples, and adjust their weight in the voting accordingly. Another solution, Best-last (BLAST), can select an active (leader) estimator based on the Online Performance Estimation by choosing the one that performed best over the set of w previous training examples.
+Consequently, after claiming that extracting meta-features is a computationally expensive process, van Rijn et al. \cite{van2018online} proposes a different approach by introducing the Online Performance Estimation framework. It represents a measurement of how ensemble members have performed on recent examples, and adjusts their weight in the voting accordingly. Another solution, Best-last (BLAST), can select an active (leader) estimator based on the Online Performance Estimation by choosing the one that performed best over the set of w previous training examples.
 
 \section{Methods}
 
-\begin{figure}[h]
+\begin{figure}
 \centering 
-\epsfig{file=experiments.eps, width=8.5cm}
+\epsfig{file=figures/experiments.eps, width=8.5cm}
 \caption{Experiment Types}
 \label{fig:experiments}
 \end{figure}
 
-A visual representation of the proposed experiments types can be observed in the Figure \ref{fig:experiments}. The first two types of experiments do not involve any AutoML approach and serve as baseline for the other experiments. While the first experiment implies the usage of a model trained on a bounded part of the stream used as training data, the second experiment implies using online learning algorithms than can perform (batch) incremental learning or ensemble of those such as \textbf{Hoeffding Tree, OzaBag, OzaBoost}. The third experiment consists of using state-of-the-art AutoML libraries to select the algorithm, its features, and hyperparameters. Last experiment involves implementing theoretically described meta-learning algorithms such as BLAST or MetaStream.
+A visual representation of the proposed experiments types can be observed in the Figure \ref{fig:experiments}. A stream of data that can suffer from concept drift over time is depicted at the top of the figure and four experiments types following the same time axis under it. These experiment types are an abstraction of the concrete experiments described in Section \ref{experiments} and aim to provide an higher level overview of the methods experimentally implemented.
 
-The benchmark data sets includes both real and synthetic ones. The later are generated using... In order to provide verifiability and reproducibility all the datasets are published on OpenML\footnote{\url{https://openml.org/}} and their corresponding ID from the platform can be found in the table \ref{table:datasets} To convert batch data sets into streams Kafka \footnote{\url{https://kafka.apache.org}}, a widely-used distributed and scalable Pub/Sub broker was used.
+First experiment type is represented by a model fitted with data a priori. The batch of data used for training is collected from the stream and it is ensured that it is not streamed later on (i.e. (parts of) the training data never used for testing). The types of algorithms used in this case are classic batch estimators such as NaiveBayes, LogisticRegression and Linear SVC.
+
+The second experiment type implies using online learning algorithms than can perform (batch) incremental learning or ensemble of those such as Hoeffding Tree, OzaBag, OzaBoost and LeverageBagging. Some of these algorithms might include drift adaptation or detection techniques such as ADWIN or use a window for training weak-learners on the batch data collected in that window.  
+
+While the first two types of experiments do not involve any AutoML approach and serve as baseline for the other experiments in this research, the third experiment consists of using state-of-the-art AutoML libraries to generate the pipeline, select the algorithms and their hyperparameters. 
+
+The last experiment type involves implementing theoretically described meta-learning algorithms such as BLAST or MetaStream and ensembles that use meta-learning internally. In contrast with the second experiment type this one implies the existence of a meta-learner (MtL) that determines which model is used for making predictions or the weight of a model in ensembles. Therefore, at a certain point in time or for a certain time window, the meta-learned can select a different model $M_{1,2, ... n}$ while in the case of the second experiment the model $M$ is the only model making prediction but evolves over time.
+
+The benchmark data sets include both real and synthetic ones that are used in the related work and in literature in general \cite{van2016massively}. In order to provide verifiability and reproducibility all the datasets will be published on OpenML\footnote{\url{https://openml.org/}} under an OpenML Study (a collection of datasets) called \textit{AutoML Streams}. An overview of the datasets and their characteristics is provided in Table \ref{table:datasets}. While the techniques and methods presented in this paper can trivially be extended to multi-label classification and regression tasks, to reduce the scope of the experiments, only single-label multi-class classification problems were selected.   
 
 \begin{table}[h]
-\label{table:datasets}
+\centering
 \renewcommand{\arraystretch}{1.25}
-\begin{tabular}{|l|l|1|} \hline
-\textbf{OpenML ID} & \textbf{Dataset Name} & \textbf{Type}  \\ \hline
-- & hyperplane & generated \\ \hline
-- & led & generated \\ \hline
-- & rbf & generated \\ \hline
-- & sea & generated \\ \hline
-- & covtype & real \\ \hline
-- & elec & real\\ \hline
-- & pokerhand & real \\ \hline
-- & weather & real \\ \hline
+\begin{tabular}{|c|c|c|c|c|} \hline
+\textbf{Dataset Name} & \textbf{Type} & \textbf{$|x_n|$} & \textbf{$classes$} & \textbf{$|cls.|$} \\ \hline
+sea\_gen & generated & 3 & $\{0, 1\}$ & 2 \\ \hline
+led\_gen & generated & 24 & $\{0,\dots,9\}$ & 10 \\ \hline
+hyperplane\_gen & generated & 10 & $\{0, 1\}$ & 2\\ \hline
+rbf\_gen & generated & 10 & $\{0, 1\}$ & 2\\ \hline
+covtype & real & 55 & $\{1,\dots,7\}$ & 7 \\ \hline
+elec & real & 6 & $\{0, 1\}$ & 2 \\ \hline
+pokerhand & real & 10 & $\{0,\dots,5\}$ & 6 \\ \hline
+weather & real & 8 & $\{0, 1\}$ & 2 \\ \hline
 \end{tabular}
 \caption{Datasets used for the experiments}
+\label{table:datasets}
 \end{table}
 
-\textbf{Generated datasets}
-\textbf{Real datasets}
-TODO: Add per dataset discussion
+\textbf{SEA Generator} generates 3 numerical attributes, that vary from 0 to 10, where 
+    only 2 of them are relevant to the classification task. A classification 
+    function is chosen, among four possible ones. These functions compare 
+    the sum of the two relevant attributes with a threshold value, unique 
+    for each of the classification functions.\cite{street2001streaming} Depending on the comparison 
+    the generator will classify an instance as one of the two possible 
+    labels. Abrupt concept drift is introduced by changing the classification function.
+
+\textbf{LED Generator} generates samples by emulating the elements of a 7-segment display.
+    The goal is to predict the digit displayed on a seven-segment LED display,
+    where each attribute has a 10\% chance of being inverted. Additional features are added
+    in order to generate noise and concept drift \cite{breiman1984classification}.
+
+\textbf{Hyperplane Generator} generates a binary classification problem of determining if a point is below or under a rotating hyperplane.
+    Hyperplanes are useful for simulating time-changing concepts, because the
+    orientation and position of the hyperplane can change in a continuous manner
+    by changing the relative size of the weights \cite{hulten2001mining}. Drift
+    is introduced by changing the weights and reversing the direction of the rotation.
+    
+\textbf{Random Radial Basis Function (RBF) Generator} generates a number of centroids. Each
+has a random position in an Euclidean space, standard deviation, weight and class label.
+Each example is defined by its coordinates in Euclidean Space and a class label referring to a centroid close by. 
+Centroids move at a certain speed, generating gradual concept drift. \cite{van2016massively}
+
+\textbf{covtype} contains the forest cover type for 30 x 30 meter cells obtained from US Forest Service (USFS). It contains 581, 012 instances and 54 attributes, and it has been used in several papers on data stream classification. The source of this dataset as well as the elec and pokerhand and is the website\footnote{\url{https://moa.cms.waikato.ac.nz/datasets}} of the popular online learning framework MOA \cite{bifet2010moa}.
+
+\textbf{elec} contains data was collected from the Australian New South Wales Electricity Market. In this market, prices are not fixed and are affected by demand and supply of the market. They are set every five minutes. The class label identifies the change of the price relative to a moving average of the last 24 hours.
+
+\textbf{pokerhand} Each record of the dataset is an example of a hand consisting of five playing cards drawn from a standard deck of 52. Each card is described using two attributes (suit and rank), for a total of 10 predictive attributes. There is one class attribute that describes the “Poker Hand”.
+
+\textbf{weather} 
 
 \section{Experiments and results}
+\label{experiments}
 
-\subsection{Experimental setup}
+\textbf{Experimental setup}
 
-\subsection{Baseline models}
-\subsubsection{Batch trained}
+- docker containers: vs. venv
+
+- python library
+
+- evaluate prequential
+
+-scikit-multiflow citation and link
+
+To convert batch data sets into streams Kafka\footnote{\url{https://kafka.apache.org}}, a widely-used distributed and scalable Pub/Sub broker was used.
+
+\subsection{Batch trained}
 \begin{figure}[h]
 \centering 
 \epsfig{file=batch_LogisticRegression_all_topics.png, width=8.5cm}
@@ -275,10 +322,9 @@ TODO: Add per dataset discussion
 \label{fig:bathclr}
 \end{figure}
 
-\subsubsection{Online learning}
+\subsection{Online learning}
 
-\subsection{Baseline models}
-\subsubsection{Batch trained}
+\subsubsection{Without drift detection}
 \begin{figure}[h]
 \centering 
 \epsfig{file=online_OzaBagging_all_topics.png, width=8.5cm}
@@ -286,13 +332,12 @@ TODO: Add per dataset discussion
 \label{fig:bathclr}
 \end{figure}
 
-\subsection{AutoML models}
-\subsubsection{Static AutoML}
-\subsubsection{Model replacement}
+\subsubsection{With drift detection}
+
+\subsection{AutoML}
+
+\subsection{Meta-learning}
 \subsubsection{Online meta-learning}
-
-
-
 
 \section{Discussion}
 
@@ -318,15 +363,14 @@ TODO: Add per dataset discussion
 % ACM needs 'a single self-contained file'!
 
 
-\appendix
+% \appendix
+% \section{DETAILED PERFORMANCE OVER TIME}
 
-\section{DETAILED PERFORMANCE OVER TIME}
-
-\begin{figure*}
-\centering 
-\epsfig{file=online_OzaBagging_all_topics.png, width=13cm}
-\caption{Online SGD Accuracy and Kappa}
-\label{fig:onlinesgd}
-\end{figure*}
+% \begin{figure*}
+% \centering 
+% \epsfig{file=online_OzaBagging_all_topics.png, width=13cm}
+% \caption{Online SGD Accuracy and Kappa}
+% \label{fig:onlinesgd}
+% \end{figure*}
 
 \end{document}

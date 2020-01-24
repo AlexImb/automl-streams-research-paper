@@ -145,7 +145,7 @@ The proposed research aims to provide relevant experimental results and interpre
 The formal definition of the AutoML problem as stated by Feurer et al. in \cite{feurer2015autosklearn} is the following:
 
 \textbf{Definition 1 (AutoML):} 
-\\ For $i = 1, \dots , n + m$, let $x_i \in \mathbb{R}^d$ denote a feature vector and $y_i \in Y$ the corresponding target value. Given a training dataset $D_{train} = {(x_1, y_1),\dots , (x_{n}, y_{n})}$ and
+\\ For $i = 1, \dots , n + m$, $n,m \in \mathbb{N}^+$,  let $x_i \in \mathbb{R}^d$ denote a feature vector of $d$ dimensions and $y_i \in Y$ the corresponding target value. Given a training dataset $D_{train} = {(x_1, y_1),\dots , (x_{n}, y_{n})}$ and
 the feature vectors $x_{n+1}, . . . , x_{n+m}$ of a test dataset $D_{test} = {(x_{n+1}, y_{n+1}), \dots ,(x_{n+m}, y_{n+m})}$
 drawn from \textit{the same underlying data distribution}, as well as a resource budget $b$ and a loss metric
 $\mathcal{L}(\cdot, \cdot)$, the AutoML problem is to (automatically) produce test set predictions $y_{n+1}, . . . , y_{n+m}$. The

@@ -44,7 +44,7 @@
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{Empirical Comparison of Automated Machine Learning Techniques for Data Streams}
+\title{Automated Machine Learning Techniques \\ for Data Streams}
 % In Bachelor Referaat at University of Twente the use of a subtitle is discouraged.
 % \subtitle{[Instructions]}
 
@@ -237,7 +237,7 @@ Consequently, after claiming that extracting meta-features is a computationally 
 
 \begin{figure}
 \centering 
-\epsfig{file=figures/experiments.eps, width=8.5cm}
+\epsfig{file=figures/experiments.png, width=8.5cm}
 \caption{Experiment Types}
 \label{fig:experiments}
 \end{figure}
@@ -334,12 +334,12 @@ The predictive accuracy and Cohen's kappa metrics were measured for all datasets
 
 \begin{figure}[h]
 \centering 
-\epsfig{file=figures/batch_DecisionTreeClassifier_7_topics.png, width=8cm}
+\epsfig{file=figures/batch_DecisionTreeClassifier_7_topics.png, width=7.8cm}
 \caption{Batch-trained model accuracy over time for a subset of datasets}
 \label{fig:batchdt}
 \end{figure}
 
-To compare between the performance of the selected algorithms an average of the average accuracy over all datasets is shown in Figure \ref{fig:batch_violins}.
+A comparison of the selected algorithms' average accuracy over all datasets is shown in Figure \ref{fig:batch_violins}. Each violin plot shows the distribution of the average accuracy across all datasets, the mean (red), and the median (green).
 
 \vspace{3cm}
 
@@ -371,59 +371,45 @@ OzaBaggingAdwin & skmultiflow.meta & Ensemble & ADWIN \\ \hline
 \label{table:online_algos}
 \end{table*}
 
-Similar to the first experiment, Figure \ref{fig:online_ht} and Figure \ref{fig:online_hat} show how the mean predictive accuracy changes over time for a single online classifier and a selected subset of datasets. Appendix \ref{appendix:a} contains Figure \ref{fig:online_all} that includes all the datasets and algorithms.
+Figure \ref{fig:online_hat} shows how the mean predictive accuracy changes over time for a single online classifier and a selected subset of datasets. Appendix \ref{appendix:a} contains Figure \ref{fig:online_all} that includes all the datasets and algorithms.
 
 \begin{figure}[h]
 \centering 
 \epsfig{file=figures/online_HoeffdingTree_7_topics.png, width=8cm}
-\caption{Online models accuracy over time for a subset of datasets}
-\label{fig:online_ht}
+% \caption{Online models accuracy over time for a subset of datasets}
+% \label{fig:online_ht}
 \end{figure}
 
 \begin{figure}[h!]
 \centering 
 \epsfig{file=figures/online_HAT_7_topics.png, width=8cm}
-\caption{Online model with drift detection. Accuracy over time for a subset of datasets}
+\caption{Online models without and with (HAT) drift detection. Accuracy over time for a subset of datasets}
 \label{fig:online_hat}
 \end{figure}
 
-A violin plot, showing the distribution of the average accuracy across topics for each of the online learning algorithms is depicted in Figure \ref{fig:online_violin}.
-
-\begin{figure}[h]
-\centering 
-\epsfig{file=figures/online_all_models_all_topics_violin.png, width=8cm}
-\caption{Online models accuracy averages}
-\label{fig:online_violin}
-\end{figure}
+A violin plot, showing the distribution of the average accuracy across topics for each of the online learning algorithms is depicted in Figure \ref{fig:online_violin} from Appendix \ref{appendix:a}.
 
 \subsection{Pretrained AutoML model}
 
-For automatically generating models, two popular \cite{gijsbers2019open} AutoML frameworks were selected: auto-sklearn and TPOT. Each framework has a budget of 180 seconds for training. The resulting model is evaluated for the streaming data. TPOT is restricted to maximum 5 generations (generations=5) and a maximum population of 20 instances for each generation (population\_size=20). For auto-sklearn, a maximum time for fitting each model is set to 30 seconds (per\_run\_time\_limit=30). Example executions of this experiment for both frameworks are in Figure \ref{fig:automl_ask} and Figure \ref{fig:automl_tpot} respectively.
+For automatically generating models, two popular \cite{gijsbers2019open} AutoML frameworks were selected: auto-sklearn and TPOT. Each framework has a budget of 180 seconds for training. The resulting model is evaluated for the streaming data. TPOT is restricted to maximum 5 generations (generations=5) and a maximum population of 20 instances for each generation (population\_size=20). For auto-sklearn, a maximum time for fitting each model is set to 30 seconds (per\_run\_time\_limit=30). Example executions of this experiment for both frameworks are depicted in Figure \ref{fig:automl_tpot}.
 
 \begin{figure}[h]
 \centering 
 \epsfig{file=figures/batch_AutoSklearnClassifier_7_topics.png, width=8cm}
-\caption{AutoML model accuracy over time for a subset of datasets}
-\label{fig:automl_ask}
+% \caption{AutoML model accuracy over time for a subset of datasets}
+% \label{fig:automl_ask}
 \end{figure}
 
 \begin{figure}[h!]
 \centering 
 \epsfig{file=figures/batch_TPOTClassifier_7_topics.png, width=8cm}
-\caption{AutoML model accuracy over time for a subset of datasets}
+\caption{AutoML models accuracy over time for a subset of datasets}
 \label{fig:automl_tpot}
 \end{figure}
 
-\vspace{2cm}
-A violin plot, showing the distribution of the average accuracy across topics for each of the AutoML-generated models is depicted in Figure \ref{fig:automl_violin}.
+A violin plot, showing the distribution of the average accuracy across topics for each of the AutoML-generated models is depicted in Figure \ref{fig:automl_violin} from Appendix \ref{appendix:a}.
 
-\begin{figure}[h!]
-\centering 
-\epsfig{file=figures/batch_automl_all_models_all_topics_violin.png, width=8cm}
-\caption{AutoML models accuracy averages}
-\label{fig:automl_violin}
-\end{figure}
-
+\vspace{1cm}
 \subsection{Online meta-learning model}
 
 The meta-learning algorithm implemented is inspired by the solution proposed by Rossi et al., MetaStream \cite{rossi2014metastream}, but adapted to solve classification problems. Another difference is that the set of base-estimators can contain more than two estimators. For this experiment, the following base-estimator algorithms are used: HoeffdingTree, KNN, PerceptronMask, SGDClassifier. The meta-learner responsible for choosing the active estimator and incorporating the meta-knowledge is selected to be an instance of a sklearn.linear\_model.SGDClassifier. For extracting meta-features the pymfe\footnote{\url{https://pypi.org/project/pymfe}} library is used. The following meta-feature categories are extracted: general, statistical, and info-theory. A description of which meta-features are included in each category is available on the pyfme website\footnote{\url{https://pymfe.readthedocs.io/en/latest/auto_pages/meta_features_description.html}}. In total, 45 features are extracted for each tumbling window of 300 samples. These meta-features and the index of the predictor with the best accuracy for the current window are used for training the meta-learner online. This way, the meta-knowledge extracted from the meta-feature is gradually incorporated into the meta-model. At the end of each window, the meta-learner predicts which base-learner will be used for making predictions during the next window. 
@@ -435,30 +421,30 @@ The meta-learning algorithm implemented is inspired by the solution proposed by 
 \label{fig:meta}
 \end{figure}
 
-For comparison, an implementation that only selects the predictor for the next window to be the one that performed best in the current window is implemented. The meta-knowledge is not considered to show the importance of the meta-features in the MetaClassifier implementation. This "algorithm" is called LastBestClassifier and a comparison to the MetaClassifier is provided in Figure \ref{fig:meta_violin}.
+For comparison, an implementation that only selects the predictor for the next window to be the one that performed best in the current window is implemented. The meta-knowledge is not considered to show the importance of the meta-features in the MetaClassifier implementation. This "algorithm" is called LastBestClassifier and a comparison to the MetaClassifier is in Figure \ref{fig:meta_violin} from Appendix \ref{appendix:a}.
 
-\begin{figure}[h]
+\begin{figure*}[hbt!]
 \centering 
-\epsfig{file=figures/meta_all_models_all_topics_violin.png, width=8cm}
-\caption{Meta-learning model accuracy averages}
-\label{fig:meta_violin}
-\end{figure}
-
+\epsfig{file=figures/all_models_all_topics_violin.png, width=16cm}
+\caption{All models accuracy averages distribution, mean (red) and median (green)}
+\label{fig:all_violins}
+\end{figure*}
 
 \section{Discussion}
 
 The experiments performed show that the presence of concept drift in streaming data is an important factor that leads to a decrease in predictive accuracy over time. In the case of the batch-trained models from the first experiment, the decrease is significant for both synthetic data with abrupt drift and real data. The online learning algorithms performed consistently better in the presence of both abrupt and slow-changing drift. The online learning algorithms that include explicit drift detection techniques (e.g. HAT that includes ADWIN) scored the highest and the most consistent accuracy over time among all selected algorithms.
 
-Furthermore, the AutoML frameworks generated models with a higher initial predictive accuracy but it decreased rapidly when encountering concept drift. The meta-learning approach of a heterogeneous ensemble of online learners resulted in better performance compared to some of the online ones alone but worse than the online ensembles equipped with ADWIN. The improvement of using the selected categories of meta-features led only to marginal improvements compared to selecting the best classifier of the last window. These findings are in line with the claims from the literature saying that meta-feature extracted from the stream lead to marginal improvements at a high computational cost \cite{van2018online}. However, having a heterogeneous ensemble of diverse algorithms and selecting an active one online proved to be a useful technique for data streams. In combination with HPO and better meta-knowledge, it can be a valuable addition to an AutoML tool for streaming data. 
+Furthermore, the AutoML frameworks generated models with a higher initial predictive accuracy but it decreased rapidly when encountering concept drift. The meta-learning approach of a heterogeneous ensemble of online learners resulted in better performance compared to some of the online ones alone but worse than the online ensembles equipped with ADWIN. The improvement of using the selected categories of meta-features led only to marginal improvements compared to selecting the best classifier of the last window. These findings are in line with the claims from the literature saying that meta-feature extracted from the stream lead to marginal improvements at a high computational cost \cite{van2018online}. 
+
+However, having a heterogeneous ensemble of diverse algorithms and selecting an active one online proved to be a useful technique for data streams. As shown in Figure \ref{fig:all_violins}, the distribution of the accuracy averages for the last type of algorithms has its minimum and maximum values close to the best values of all the other algorithms. In combination with HPO and better meta-knowledge, it can be a valuable addition to an AutoML tool for streaming data. 
 
 \section{Conclusion}
 
-This research surveyed and summarised the existing AutoML and online learning tools and techniques applicable to streaming data. It proposed a scalable and portable benchmarking framework based on Apache Kafka streams and Docker containers. Consequently, using the introduced framework, it empirically showed how the predictive performance of models is influenced by concept drift over time. Finally, a meta-learning technique based on meta-features extraction was introduced and benchmarked. The results showed that the implemented meta-learning approach provides marginal improvements, but, among other techniques, it has the potential to be the core of an AutoML tool.
+This research surveyed and summarised the existing AutoML and online learning tools and techniques applicable to streaming data. It proposed a scalable and portable benchmarking framework based on Apache Kafka streams and Docker containers. Consequently, using the introduced framework, it empirically showed how the predictive performance of models is influenced by concept drift over time. Finally, a meta-learning technique based on meta-features extraction was introduced and benchmarked. The results showed that the implemented meta-learning approach provides marginal improvements compared to state-of-the-art ensembles equipped with drift detection, but it is useful for selecting the active estimator in a heterogeneous ensemble.  Among other techniques, it has the potential to be the core of an AutoML tool for data streams.
 
 \section{Future Work}
 
-Considering the importance and the diversification of the AutoML problem for data streams, future work ought to be performed to empirically cover existing techniques and develop new ones. Using automl-streams, the experimental framework proposed in this work, more algorithms can be implemented and easily benchmarked in the same way used in this research. Furthermore, automl-streams can be used to plot other metrics such as training and prediction times for a better assessment of the computational cost of the presented techniques. Moreover, new AutoML frameworks, including the Java-based ones (H2O.ai, AutoWeka, etc.), can be added and compared to the ones used above. Finally, considering the need for an end-to-end AutoML framework in the industry, automl-streams may be extended with Auto Cleaning, AutoFE, and HPO components.
-
+Considering the importance and the diversification of the AutoML problem for data streams, future work ought to be performed to empirically cover other existing techniques and develop new ones. Using automl-streams, the experimental framework proposed in this work, more algorithms can be implemented and easily benchmarked in the same way used in this research. Furthermore, automl-streams can be used to plot other metrics such as training and prediction times for a better assessment of the computational cost of the presented techniques. Moreover, new AutoML frameworks, including the Java-based ones (H2O.ai, AutoWeka, etc.), can be added and compared to the ones used above. Finally, considering the need for an end-to-end AutoML framework in the industry, automl-streams may be extended with Auto Cleaning, AutoFE, and HPO components.
 
 % The following two commands are all you need in the
 % initial runs of your .tex file to
@@ -476,28 +462,59 @@ Considering the importance and the diversification of the AutoML problem for dat
 \newpage
 
 \appendix
-\section{DETAILED PLOTS}
+\section{DETAILED AND ADDITIONAL PLOTS}
 \label{appendix:a}
 
-\begin{figure}[h]
+Includes plots for all the datasets and additional plots for the online, AutoML and meta-learning experiments.
+
+\begin{figure}[h!]
 \centering 
 \epsfig{file=figures/batch_all_models_all_topics.png, width=8cm}
 \caption{Detailed plots of batch models accuracy over time grouped by algorithm}
 \label{fig:batchall}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering 
 \epsfig{file=figures/online_all_models_all_topics.png, width=8cm}
 \caption{Detailed plots of online models accuracy over time grouped by algorithm}
 \label{fig:online_all}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[h!]
 \centering 
-\epsfig{file=figures/batch_automl_all_models_all_topics.png, width=8cm}
+\epsfig{file=figures/batch_automl_all_models_all_topics.png, width=7.5cm}
 \caption{Detailed plots of AutoML models accuracy over time grouped by algorithm}
-\label{fig:batchall}
+\label{fig:automlall}
+\end{figure}
+
+\begin{figure}[h!]
+\centering 
+\epsfig{file=figures/meta_all_models_all_topics.png, width=7.5cm}
+\caption{Detailed plots of meta models accuracy over time grouped by algorithm}
+\label{fig:metaall}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering 
+\epsfig{file=figures/online_all_models_all_topics_violin.png, width=8cm}
+\caption{Online models accuracy averages}
+\label{fig:online_violin}
+\end{figure}
+
+\begin{figure}[h!]
+\centering 
+\epsfig{file=figures/batch_automl_all_models_all_topics_violin.png, width=8cm}
+\caption{AutoML models accuracy averages}
+\label{fig:automl_violin}
+\end{figure}
+
+\begin{figure}[h!]
+\centering 
+\epsfig{file=figures/meta_all_models_all_topics_violin.png, width=8cm}
+\caption{Meta-learning models accuracy averages}
+\label{fig:meta_violin}
 \end{figure}
 
 \end{document}
